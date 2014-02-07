@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	echo "Missing java version"
+	exit 1
+fi
+
+PACKAGES=$(update-alternatives --get-selections | grep java | awk ' { print $1 } ' )
+
+for p in $PACKAGES; do
+	alt=$(update-alternatives --list $p | grep "java-$1")
+	update-alternatives --set $p $alt
+done
